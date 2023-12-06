@@ -2,6 +2,7 @@ package client
 
 import (
 	"context"
+	"log"
 	"time"
 
 	controlapi "github.com/moby/buildkit/api/services/control"
@@ -30,6 +31,7 @@ func (c *Client) ListWorkers(ctx context.Context, opts ...ListWorkersOption) ([]
 	req := &controlapi.ListWorkersRequest{Filter: info.Filter}
 	resp, err := c.ControlClient().ListWorkers(ctx, req)
 	if err != nil {
+		log.Println("log-devtron error in listing workers : ", "err : ", err.Error())
 		return nil, errors.Wrap(err, "failed to list workers")
 	}
 

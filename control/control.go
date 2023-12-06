@@ -3,6 +3,7 @@ package control
 import (
 	"context"
 	"fmt"
+	"log"
 	"strconv"
 	"sync"
 	"sync/atomic"
@@ -517,9 +518,11 @@ func (c *Controller) Session(stream controlapi.Control_SessionServer) error {
 }
 
 func (c *Controller) ListWorkers(ctx context.Context, r *controlapi.ListWorkersRequest) (*controlapi.ListWorkersResponse, error) {
+	log.Println("log-devtron : listing workers")
 	resp := &controlapi.ListWorkersResponse{}
 	workers, err := c.opt.WorkerController.List(r.Filter...)
 	if err != nil {
+		log.Println("log-devtron : error in listing workers", " err ", err.Error())
 		return nil, err
 	}
 	for _, w := range workers {
